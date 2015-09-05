@@ -6,6 +6,7 @@ var ipc = require('ipc')
 var dialog = require('dialog')
 var fs = require('fs')
 var path = require('path')
+var nativeImage = require('native-image')
 
 var darwinTemplate = require('./menus/darwin-menu.js')
 var otherTemplate = require('./menus/other-menu.js')
@@ -16,6 +17,7 @@ var mainWindow = null
 var menu = null
 
 var iconPath = path.join(__dirname, '/assests/git-it.png')
+var nativeIcon = nativeImage.createFromPath(iconPath)
 
 crashReporter.start()
 
@@ -26,7 +28,7 @@ app.on('window-all-closed', function appQuit () {
 })
 
 app.on('ready', function appReady () {
-  mainWindow = new BrowserWindow({"min-width": 800, "min-width": 600, width: 900, height: 600, title: 'Git-it', icon: iconPath })
+  mainWindow = new BrowserWindow({"min-width": 800, "min-width": 600, width: 900, height: 600, title: 'Git-it', icon: nativeIcon })
   mainWindow.loadUrl('file://' + __dirname + '/index.html')
 
   var userDataPath = path.join(app.getPath('userData'), 'user-data.json')
